@@ -5,8 +5,11 @@ import { drizzle } from 'drizzle-orm/neon-http';
 import { pgTable, serial, varchar } from 'drizzle-orm/pg-core';
 import { eq, ilike } from 'drizzle-orm';
 
+// Construct the connection string using environment variables:
+const connectionString = `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DATABASE}?sslmode=require`;
+
 export const db = drizzle(
-  neon(process.env.POSTGRES_URL!, {
+  neon(connectionString, {
     fetchOptions: {
       cache: 'no-store'
     }
